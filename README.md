@@ -1,11 +1,11 @@
-[![Docker Repository on Quay](https://quay.io/repository/dcooley/debug/status "Docker Repository on Quay")](https://quay.io/repository/dcooley/debug)
+[![Docker Repository on Quay](https://quay.io/repository/mauilion/debug/status "Docker Repository on Quay")](https://quay.io/repository/mauilion/debug)
 
 This is meant to be used as a debug container.
 
 You can invoke it with:
 
 ``` bash
-kubectl run debug -ti --image=quay.io/dcooley/debug:latest --restart=Never --image-pull-policy=Always -- /bin/bash
+kubectl run debug -ti --image=quay.io/mauilion/debug:latest --restart=Never --image-pull-policy=Always -- /bin/bash
 ```
 
 When you exit the container you can reconnect with:
@@ -24,7 +24,7 @@ For example:
 ``` bash
 kubectl create serviceaccount debug
 kubectl create clusterrolebinding debug --clusterrole=admin --serviceaccount=default:debug
-kubectl run debug -ti --image=quay.io/dcooley/debug --image-pull-policy=Always --overrides='{ "spec": { "serviceAccountName": "debug" } }'   --restart=Never -- /bin/bash
+kubectl run debug -ti --image=quay.io/mauilion/debug --image-pull-policy=Always --overrides='{ "spec": { "serviceAccountName": "debug" } }'   --restart=Never -- /bin/bash
 ```
 
 
