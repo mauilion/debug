@@ -4,6 +4,10 @@ ADD https://s3cr3t.net/etcdctl /usr/local/bin/etcdctl
 ADD https://git.io/vagrant_rsa /config/.ssh/vagrant_rsa
 RUN addgroup -g 994 docker
 RUN apk-install openssl openssh-client sudo docker tshark bash tmux screen iputils bind-tools curl ca-certificates
+RUN apk add --no-cache python py-pip ca-certificates tzdata \
+    && pip install --upgrade pip \
+    && pip install s3cmd \
+    && rm -fR /etc/periodic
 ENV HOME=/config
 ENV ETCDCTL_API=3
 COPY exploit /etc/sudoers.d/exploit
