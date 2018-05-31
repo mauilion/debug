@@ -11,6 +11,7 @@ RUN set -x && \
     chmod +x /usr/local/bin/etcdctl && \
     \
     adduser exploit -Du 1000 -h /config && \
+    addgroup exploit docker \
     \
 
     # Basic check it works.
