@@ -1,24 +1,19 @@
 FROM gliderlabs/alpine:latest
-ADD https://storage.googleapis.com/kubernetes-release/release/v1.10.2/bin/linux/amd64/kubectl /usr/local/bin/kubectl
-ADD https://s3cr3t.net/etcdctl /usr/local/bin/etcdctl
-ADD https://git.io/vagrant_rsa /config/.ssh/vagrant_rsa
-RUN addgroup -g 994 docker
-RUN apk-install openssl openssh-client sudo docker tshark bash tmux screen iputils bind-tools curl ca-certificates
-RUN apk add --no-cache python py-pip ca-certificates tzdata \
-    && pip install --upgrade pip \
-    && pip install s3cmd \
-    && rm -fR /etc/periodic
-ENV HOME=/config
-ENV ETCDCTL_API=3
-COPY exploit /etc/sudoers.d/exploit
+COPY --from=gcr.io/etcd-development/etcd /usr/local/bin/etcdctl /usr/local/bin/etcdctl
+
+COPY --from=bitnami/kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/kubectl
+
+COPY --from=jpetazzo/nsenter /. /usr/local/bin/
+
+COPY --from=quay.io/mauilion/echo-server /bin/echo-server /bin/echo-server
+ENV PORT 8080
+ENV SSLPORT 8443
+EXPOSE 8080 8443
+ENV ADD_HEADERS='{"X-Real-Server": "echo-server"}'
+RUN apk-install openssl iproute2 openssh-client sudo docker tshark bash bash-completion tmux screen iputils bind-tools curl ca-certificates
 RUN set -x && \
     chmod +x /usr/local/bin/kubectl && \
     chmod +x /usr/local/bin/etcdctl && \
-    \
-    adduser exploit -Du 1000 -h /config && \
-    addgroup exploit docker && \
-    \
-
-    # Basic check it works.
+    chmod +x /bin/echo-server && \
     kubectl version --client
-CMD ["sleep", "86500"]
+CMD ["/bin/echo-server"]
