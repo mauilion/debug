@@ -10,7 +10,7 @@ ENV PORT 8080
 ENV SSLPORT 8443
 EXPOSE 8080 8443
 ENV ADD_HEADERS='{"X-Real-Server": "echo-server"}'
-RUN apk add --no-cache openssl iproute2 openssh-client sudo docker tshark bash bash-completion tmux screen iputils bind-tools curl ca-certificates netcat-openbsd
+RUN apk add --no-cache openssl iproute2 openssh-client sudo docker tshark tcpdump bash bash-completion tmux screen iputils bind-tools curl ca-certificates netcat-openbsd
 RUN set -x && \
     chmod +x /usr/local/bin/kubectl && \
     chmod +x /usr/local/bin/etcdctl && \
