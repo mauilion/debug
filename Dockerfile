@@ -1,5 +1,5 @@
 FROM bash
-COPY --from=gcr.io/etcd-development/etcd /usr/local/bin/etcdctl /usr/local/bin/etcdctl
+COPY --from=bitnami/etcd /opt/bitnami/etcd/bin/etcdctl /usr/local/bin/etcdctl
 
 COPY --from=bitnami/kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/kubectl
 
