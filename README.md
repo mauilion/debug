@@ -29,4 +29,4 @@ kubectl run debug -ti --image=quay.io/mauilion/debug --image-pull-policy=Always 
 
 
 
-Have a bunch of fun!
+Have a bunch of fun!!
